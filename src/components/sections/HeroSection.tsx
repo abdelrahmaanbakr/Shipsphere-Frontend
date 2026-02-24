@@ -1,10 +1,16 @@
 import type { FC } from "react";
-import { useRouter } from "../hooks";
+import { useAppDispatch } from "../../redux/hookredux";
+import { navigate } from "../../redux/navigateRedux/navigateSlice";
 import { ArrowIcon } from "../icons";
 import Button from "../Buttons/Buttons";
 
 const HeroSection: FC = () => {
-  const { navigate } = useRouter();
+  const dispatch = useAppDispatch();
+
+  const handleClick = (page: string) => {
+    dispatch(navigate(page)); // مجرد تحديث state
+    // لاحقاً ممكن تستخدم react-router navigate إذا حبيت
+  };
 
   return (
     <section className="relative w-full min-h-[85vh] md:min-h-[90vh] overflow-hidden">
@@ -73,7 +79,7 @@ const HeroSection: FC = () => {
               <Button
                 variant="primary"
                 size="lg"
-                onClick={() => navigate("contact")}
+                onClick={() => handleClick("contact")}
                 className="group w-full sm:w-auto"
               >
                 View Our Impact
@@ -85,7 +91,7 @@ const HeroSection: FC = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                onClick={() => navigate("about")}
+                onClick={() => handleClick("about")}
                 className="w-full sm:w-auto"
               >
                 Partner with Us

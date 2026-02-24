@@ -1,127 +1,130 @@
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { Sun, Moon, Menu, X, LogOut, Truck, UserPlus, LogIn } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Sun, Moon, Menu, X, Truck, ArrowRight } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "../redux/hookredux";
+import { toggleTheme } from "../redux/themeRedux/themeSlice";
 
 const Navbar = () => {
-  const { theme, toggleTheme } = useTheme();
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector((state) => state.theme.theme);
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setIsOpen(false);
-    navigate("/login");
-  };
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // تنسيق الروابط مع تأثير الـ Active
-  const linkStyle = ({ isActive }) => 
-    `relative px-3 py-2 text-sm font-medium transition-colors duration-300 
-    ${isActive ? "text-blue-500" : "text-gray-600 dark:text-gray-300 hover:text-blue-500"} 
-    after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 
-    after:bg-blue-500 after:transform after:scale-x-0 after:transition-transform after:duration-300 
-    ${isActive ? "after:scale-x-100" : "hover:after:scale-x-100"}`;
+  const mainLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  const authLinks = [
+    { name: "Login", path: "/login" },
+    { name: "Signup", path: "/signup" },
+  ];
+
+  const linkStyle = ({ isActive }: { isActive: boolean }) =>
+    `text-sm font-bold transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400 ${
+      isActive
+        ? "text-blue-600 dark:text-blue-400 underline underline-offset-4"
+        : "text-black dark:text-white"
+    }`;
 
   return (
     <>
-      <nav className="fixed w-full top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            
-            {/* Logo */}
-            <div className="flex items-center gap-2 group cursor-pointer" onClick={() => navigate("/")}>
-              <div className="p-2 bg-blue-500 rounded-lg group-hover:rotate-12 transition-transform duration-300">
-                <Truck className="text-white" size={22} />
-              </div>
-              <h1 className="text-xl font-black tracking-tighter text-gray-900 dark:text-white uppercase">
-                Ship<span className="text-blue-500">Smarter</span>
-              </h1>
+      <div className="fixed w-full top-0 z-50 flex justify-center px-4 sm:px-6 py-4">
+        <nav
+          className={`transition-all duration-500 ease-in-out flex items-center justify-between
+            ${scrolled
+              ? "w-full max-w-6xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-md border border-gray-200 dark:border-gray-700 px-6 py-2.5 rounded-2xl"
+              : "w-full max-w-7xl bg-transparent px-2 py-2 rounded-none"
+            }`}
+        >
+          {/* 1. Logo */}
+          <div
+            className="flex items-center gap-2.5 cursor-pointer group flex-1"
+            onClick={() => navigate("/")}
+          >
+            <div className="w-9 h-9 flex items-center justify-center bg-blue-600 rounded-lg text-white shadow-lg shadow-blue-500/20">
+              <Truck size={18} strokeWidth={2.5} />
+            </div>
+            <span className="text-lg font-black tracking-tight text-black dark:text-white hidden sm:block">
+              Ship<span className="text-blue-600">Smarter</span>
+            </span>
+          </div>
+
+          {/* 2. Main Navigation */}
+          <div className="hidden md:flex items-center gap-8 flex-1 justify-center">
+            {mainLinks.map((link) => (
+              <NavLink key={link.name} to={link.path} className={linkStyle}>
+                {link.name}
+              </NavLink>
+            ))}
+          </div>
+
+          {/* 3. Auth & Actions */}
+          <div className="flex items-center gap-3 flex-1 justify-end">
+            <div className="hidden lg:flex items-center gap-6 mr-2 border-r border-gray-300 dark:border-gray-700 pr-6">
+              {authLinks.map((link) => (
+                <NavLink key={link.name} to={link.path} className={linkStyle}>
+                  {link.name}
+                </NavLink>
+              ))}
             </div>
 
-            {/* Desktop Links */}
-            <div className="hidden md:flex items-center space-x-4">
-              <NavLink to="/" className={linkStyle}>Home</NavLink>
-              <NavLink to="/about" className={linkStyle}>About</NavLink>
-              <NavLink to="/contact" className={linkStyle}>Contact</NavLink>
+            <button
+              onClick={() => dispatch(toggleTheme())}
+              className="p-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            <button className="hidden sm:flex items-center gap-1.5 bg-black dark:bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:opacity-90 transition-all active:scale-95 shadow-md shadow-black/10">
+              Get Started
+              <ArrowRight size={14} />
+            </button>
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2 text-black dark:text-white"
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </nav>
+      </div>
+
+      {/* Mobile Menu */}
+      <div className={`fixed inset-x-4 top-20 z-[49] md:hidden transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"}`}>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-6 rounded-2xl shadow-xl">
+          <div className="flex flex-col gap-4">
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Navigation</span>
+            {mainLinks.map((link) => (
+              <NavLink key={link.name} to={link.path} onClick={() => setIsOpen(false)} className="text-base font-bold text-black dark:text-white">
+                {link.name}
+              </NavLink>
+            ))}
+
+            <div className="h-px bg-gray-100 dark:bg-gray-800 my-2" />
+
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Account</span>
+            <div className="grid grid-cols-2 gap-3">
+              {authLinks.map((link) => (
+                <NavLink key={link.name} to={link.path} onClick={() => setIsOpen(false)} className="flex items-center justify-center py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-bold text-black dark:text-white">
+                  {link.name}
+                </NavLink>
+              ))}
             </div>
-
-            {/* Desktop Actions */}
-            <div className="hidden md:flex items-center gap-3">
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:ring-2 ring-blue-500/50 transition-all"
-              >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-
-              <div className="h-6 w-[1px] bg-gray-300 dark:bg-gray-700 mx-1" />
-
-              {!isAuthenticated ? (
-                <div className="flex items-center gap-2">
-                  <NavLink to="/login" className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition">
-                    Login
-                  </NavLink>
-                  <NavLink to="/signup" className="px-4 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-500/30 transition-all active:scale-95">
-                    Sign Up
-                  </NavLink>
-                </div>
-              ) : (
-                <button 
-                  onClick={handleLogout} 
-                  className="flex items-center gap-2 bg-red-500/10 text-red-600 dark:text-red-400 px-4 py-2 rounded-xl border border-red-500/20 hover:bg-red-500 hover:text-white transition-all"
-                >
-                  <LogOut size={16} /> <span className="text-sm font-bold">Logout</span>
-                </button>
-              )}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-2">
-              <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300">
-                 {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              <button 
-                onClick={() => setIsOpen(!isOpen)} 
-                className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-              >
-                {isOpen ? <X size={26} /> : <Menu size={26} />}
-              </button>
-            </div>
+            <button className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-sm mt-2">
+              Get Started
+            </button>
           </div>
         </div>
-
-        {/* Mobile Menu - Animated */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 border-b border-gray-200 dark:border-gray-800" : "max-h-0"}`}>
-          <div className="px-4 pt-2 pb-6 space-y-1 bg-white dark:bg-gray-900">
-            <NavLink to="/" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl">Home</NavLink>
-            <NavLink to="/about" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl">About</NavLink>
-            <NavLink to="/contact" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl">Contact</NavLink>
-            
-            <div className="pt-4 mt-4 border-t border-gray-100 dark:border-gray-800">
-              {!isAuthenticated ? (
-                <div className="grid grid-cols-2 gap-3">
-                  <NavLink to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-800 rounded-xl font-bold">
-                    <LogIn size={18}/> Login
-                  </NavLink>
-                  <NavLink to="/signup" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30">
-                    <UserPlus size={18}/> Join
-                  </NavLink>
-                </div>
-              ) : (
-                <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 bg-red-500 text-white px-4 py-3 rounded-xl font-bold">
-                  <LogOut size={18} /> Logout
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content Spacer */}
-      <div className="pt-16 min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-        <Outlet context={{ setIsAuthenticated }} />
       </div>
     </>
   );

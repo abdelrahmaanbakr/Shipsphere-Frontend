@@ -1,9 +1,16 @@
 import type { FC } from "react";
-import { useRouter } from "../hooks";
+import { useAppDispatch } from "../../redux/hookredux";
+import { navigate } from "../../redux/navigateRedux/navigateSlice";
 import { ArrowIcon } from "../icons";
 import Button from "../Buttons/Buttons";
+
 const ExclusiveOffers: FC = () => {
-  const { navigate } = useRouter();
+  const dispatch = useAppDispatch();
+
+  const handleClick = (page: string) => {
+    dispatch(navigate(page)); // مجرد تحديث state
+    // لو عايز لاحقاً ممكن تضيف navigate فعلي باستخدام react-router
+  };
 
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-900 transition-colors">
@@ -19,7 +26,10 @@ const ExclusiveOffers: FC = () => {
               Exclusive Offers
             </h2>
           </div>
-          <button className="text-blue-600 dark:text-blue-400 text-sm font-semibold hover:underline hidden sm:block">
+          <button
+            className="text-blue-600 dark:text-blue-400 text-sm font-semibold hover:underline hidden sm:block"
+            onClick={() => handleClick("offers")}
+          >
             View all offers →
           </button>
         </div>
@@ -39,7 +49,12 @@ const ExclusiveOffers: FC = () => {
               <p className="text-blue-200 text-sm sm:text-base mb-6">
                 Apply code <span className="font-bold bg-white/20 px-2 py-0.5 rounded">WELCOME30</span> at checkout.
               </p>
-              <Button variant="white" size="md" onClick={() => navigate("contact")} className="w-full sm:w-auto">
+              <Button
+                variant="white"
+                size="md"
+                onClick={() => handleClick("contact")}
+                className="w-full sm:w-auto"
+              >
                 Claim Offer <ArrowIcon />
               </Button>
             </div>
@@ -56,7 +71,12 @@ const ExclusiveOffers: FC = () => {
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
                 Register your business to unlock volume discounts up to 15%. Dedicated account manager included.
               </p>
-              <Button variant="primary" size="md" onClick={() => navigate("contact")} className="w-full sm:w-auto">
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => handleClick("contact")}
+                className="w-full sm:w-auto"
+              >
                 Register Now <ArrowIcon />
               </Button>
             </div>
