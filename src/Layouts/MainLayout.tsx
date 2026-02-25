@@ -4,16 +4,16 @@ import Footer from "./Footer";
 
 const MainLayout = () => {
   return (
-    <div>
-      
-    <Navbar/>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
 
-      {/* هنا بيتعرض Home / About / Contact */}
-      <Outlet />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };
 
-export default MainLayout
+export default MainLayout;
