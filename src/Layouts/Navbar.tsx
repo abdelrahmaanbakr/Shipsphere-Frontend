@@ -57,7 +57,7 @@ const Navbar = () => {
               Ship<span className="text-blue-600">Smarter</span>
             </span>
           </div>
-
+          
           {/* 2. Main Navigation */}
           <div className="hidden md:flex items-center gap-8 flex-1 justify-center">
             {mainLinks.map((link) => (
