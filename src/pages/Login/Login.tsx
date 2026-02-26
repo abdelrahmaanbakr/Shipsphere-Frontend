@@ -32,7 +32,7 @@ const Login = () => {
     };
   
   return (
-    <div className="min-h-screen lg:h-screen grid lg:grid-cols-2">
+    <div className="pt-20 min-h-screen lg:h-screen grid lg:grid-cols-2">
 
       {/* LEFT PANEL */}
       <div className="hidden lg:flex flex-col justify-between h-full px-16 py-12 bg-linear-to-br from-blue-600 to-blue-700 text-white">
