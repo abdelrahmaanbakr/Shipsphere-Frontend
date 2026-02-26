@@ -11,41 +11,38 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-
 const Login = () => {
-    const [loading, setLoading] = useState(false);
-  
-    const {
-      register,
-      handleSubmit,
-      formState: { errors, isValid },
-    } = useForm<FormData>({
-      resolver: zodResolver(schema),
-      mode: "onChange",
-    });
-  
-    const onSubmit = async (data: FormData) => {
-      setLoading(true);
-      await new Promise((r) => setTimeout(r, 1200));
-      console.log(data);
-      setLoading(false);
-    };
-  
+  const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+  });
+
+  const onSubmit = async (data: FormData) => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 1200));
+    console.log(data);
+    setLoading(false);
+  };
+
   return (
-    <div className="min-h-screen lg:h-screen grid lg:grid-cols-2">
+    <div className="min-h-screen lg:h-screen grid lg:grid-cols-2
+                    bg-white dark:bg-slate-800 text-gray-900 dark:text-white">
 
       {/* LEFT PANEL */}
-      <div className="hidden lg:flex flex-col justify-between h-full px-16 py-12 bg-linear-to-br from-blue-600 to-blue-700 text-white">
-
-        {/* LOGO */}
+      <div className="hidden lg:flex flex-col justify-between h-full px-16 py-12 bg-gradient-to-br from-blue-600 to-blue-700 text-white">
         <div className="flex items-center gap-3">
           <div className="bg-white/20 p-3 rounded-lg text-xl">🚚</div>
           <span className="text-xl font-semibold tracking-wide">
-            ShipCompare
+            ShipSphere
           </span>
         </div>
 
-        {/* TEXT */}
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold leading-tight mb-6">
             Compare shipping rates globally in seconds
@@ -57,48 +54,51 @@ const Login = () => {
           </p>
         </div>
 
-        {/* IMAGE */}
         <img
           src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d"
           className="rounded-2xl shadow-2xl w-full max-h-65 object-cover"
         />
 
-        {/* BADGE */}
         <div className="text-center text-sm opacity-80">
           Enterprise Grade Security
         </div>
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="flex items-center justify-center h-full px-6 bg-gray-50 dark:bg-gray-900">
+      <div className="flex items-center justify-center h-full px-6 bg-gray-50 dark:bg-slate-800">
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl"
+          className="w-full max-w-md bg-white dark:bg-slate-700
+                     p-8 rounded-2xl shadow-xl transition-colors duration-300"
         >
           {/* TITLE */}
           <h2 className="text-4xl font-bold mb-2 text-gray-800 dark:text-white">
             Welcome Back
           </h2>
 
-          <p className="text-gray-500 mb-8">
+          <p className="text-gray-500 dark:text-slate-400 mb-8">
             Please enter your details to sign in to your account.
           </p>
 
           {/* EMAIL */}
           <div className="mb-5">
-            <label className="text-sm text-gray-600">Email address</label>
+            <label className="text-sm text-gray-600 dark:text-slate-400">
+              Email address
+            </label>
 
             <input
               {...register("email")}
               placeholder="name@company.com"
               className={`mt-1 w-full px-4 py-3 rounded-lg border outline-none transition
-              focus:ring-2 focus:ring-blue-500
-              ${
-                errors.email
+                focus:ring-2 focus:ring-blue-500
+                ${errors.email
                   ? "border-red-500"
-                  : "border-gray-300"
-              }`}
+                  : "border-gray-300 dark:border-slate-600"}
+                bg-white dark:bg-slate-700
+                text-gray-900 dark:text-black
+                placeholder-gray-400 dark:placeholder:text-gray-500
+              `}
             />
 
             {errors.email && (
@@ -111,8 +111,13 @@ const Login = () => {
           {/* PASSWORD */}
           <div className="mb-6">
             <div className="flex justify-between text-sm">
-              <label>Password</label>
-              <Link to="/forgot" className="text-blue-600 text-sm">
+              <label className="text-gray-700 dark:text-slate-400">
+                Password
+              </label>
+              <Link
+                to="/forgot"
+                className="text-blue-600 hover:underline"
+              >
                 Forgot password?
               </Link>
             </div>
@@ -121,12 +126,14 @@ const Login = () => {
               type="password"
               {...register("password")}
               className={`mt-1 w-full px-4 py-3 rounded-lg border outline-none transition
-              focus:ring-2 focus:ring-blue-500
-              ${
-                errors.password
+                focus:ring-2 focus:ring-blue-500
+                ${errors.password
                   ? "border-red-500"
-                  : "border-gray-300"
-              }`}
+                  : "border-gray-300 dark:border-slate-600"}
+                bg-white dark:bg-slate-700
+                text-gray-900 dark:text-black
+                placeholder-gray-400 dark:placeholder:text-gray-500
+              `}
             />
 
             {errors.password && (
@@ -139,36 +146,43 @@ const Login = () => {
           {/* CHECKBOX */}
           <div className="flex items-center gap-2 text-sm mb-6">
             <input type="checkbox" />
-            <span>Remember me for 30 days</span>
+            <span className="text-gray-700 dark:text-slate-400">
+              Remember me for 30 days
+            </span>
           </div>
 
-          {/* BUTTON */}
+          {/* SIGN IN BUTTON */}
           <button
             disabled={!isValid || loading}
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold
-            hover:bg-blue-700 transition
-            disabled:opacity-50"
+                       hover:bg-blue-700 transition
+                       disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Sign in"}
           </button>
 
           {/* DIVIDER */}
           <div className="flex items-center gap-4 my-7 text-gray-400 text-sm">
-            <div className="flex-1 h-px bg-gray-300"></div>
-            OR CONTINUE WITH
-            <div className="flex-1 h-px bg-gray-300"></div>
+            <div className="flex-1 h-px bg-gray-300 dark:bg-slate-600"></div>
+            <span className="dark:text-slate-400">OR CONTINUE WITH</span>
+            <div className="flex-1 h-px bg-gray-300 dark:bg-slate-600"></div>
           </div>
 
           {/* GOOGLE BUTTON */}
           <button
             type="button"
-            className="w-full border py-3 rounded-lg hover:bg-gray-100 transition font-medium"
+            className="w-full border py-3 rounded-lg transition font-medium
+                       border-gray-300 dark:border-slate-600
+                       bg-white dark:bg-slate-700
+                       text-gray-700 dark:text-white
+                       hover:bg-gray-100
+                       dark:hover:bg-slate-600"
           >
             Continue with Google
           </button>
 
           {/* FOOTER */}
-          <p className="text-center text-sm mt-7">
+          <p className="text-center text-sm mt-7 text-gray-700 dark:text-slate-400">
             Don't have an account?{" "}
             <span className="text-blue-600 cursor-pointer hover:underline">
               Sign up for free
@@ -178,7 +192,7 @@ const Login = () => {
 
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
