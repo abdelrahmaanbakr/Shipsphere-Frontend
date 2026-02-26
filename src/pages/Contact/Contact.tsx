@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
     <>
      <div className="min-h-screen 
                 bg-gray-100 dark:bg-slate-900 
-                flex items-center justify-center p-6 transition-colors">
+                flex items-center justify-center p-6 transition-colors mt-5">
 
   <div className="bg-white dark:bg-slate-800 
                   rounded-2xl shadow-xl 

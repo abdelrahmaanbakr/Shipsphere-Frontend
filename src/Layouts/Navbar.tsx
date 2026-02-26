@@ -23,16 +23,12 @@ const Navbar = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  const authLinks = [
-    { name: "Login", path: "/login" },
-  ];
-
-  // تعديل الـ linkStyle ليكون النص أسود داكن في الوضع الفاتح
+  // ستايل الروابط: أسود في الفاتح وأبيض صريح في الغامق
   const linkStyle = ({ isActive }: { isActive: boolean }) =>
     `relative text-sm font-bold transition-all duration-300 py-2 group ${
       isActive
         ? "text-blue-600 dark:text-blue-400"
-        : "text-slate-950 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+        : "text-slate-950 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
     }`;
 
   return (
@@ -41,15 +37,12 @@ const Navbar = () => {
         <nav
           className={`transition-all duration-500 ease-in-out flex items-center justify-between
             ${scrolled
-              ? "w-[92%] max-w-6xl bg-white/80 dark:bg-gray-950/80 backdrop-blur-md shadow-lg border border-white/20 dark:border-gray-800/50 px-6 py-2 rounded-2xl"
+              ? "w-[92%] max-w-6xl bg-white/80 dark:bg-gray-950/90 backdrop-blur-md shadow-lg border border-white/20 dark:border-gray-800/50 px-6 py-2 rounded-2xl"
               : "w-[95%] max-w-7xl bg-transparent px-6 py-2 rounded-none"
             }`}
         >
           {/* 1. Logo */}
-          <div
-            className="flex items-center gap-3 cursor-pointer group flex-1"
-            onClick={() => navigate("/")}
-          >
+          <div className="flex items-center gap-3 cursor-pointer group flex-1" onClick={() => navigate("/")}>
             <div className="relative">
               <div className="absolute -inset-1 bg-blue-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
               <div className="relative w-10 h-10 flex items-center justify-center bg-blue-600 rounded-lg text-white shadow-lg">
@@ -57,7 +50,7 @@ const Navbar = () => {
               </div>
             </div>
             <span className="text-xl font-black tracking-tight text-slate-950 dark:text-white hidden sm:block">
-              Ship<span className="text-blue-600">Smarter</span>
+              Ship<span className="text-blue-600">sphere</span>
             </span>
           </div>
           
@@ -78,23 +71,26 @@ const Navbar = () => {
           {/* 3. Actions */}
           <div className="flex items-center gap-4 flex-1 justify-end">
             <div className="hidden lg:flex items-center gap-6">
-              {authLinks.map((link) => (
-                <NavLink key={link.name} to={link.path} className="text-sm font-bold text-slate-950 dark:text-gray-200 hover:text-blue-600 transition-colors">
-                  {link.name}
-                </NavLink>
-              ))}
+              <NavLink 
+                to="/login" 
+                className="text-sm font-bold text-slate-950 dark:text-white hover:text-blue-600 transition-colors"
+              >
+                Login
+              </NavLink>
             </div>
 
             <button
               onClick={() => dispatch(toggleTheme())}
-              className="p-2.5 text-slate-950 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all active:scale-90"
+              className="p-2.5 text-slate-950 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all active:scale-90"
             >
               {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
             </button>
 
-            <button className="hidden sm:flex items-center gap-2 bg-slate-950 dark:bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 transition-all active:scale-95 shadow-md shadow-black/10">
-              Signup
-              <ArrowRight size={16} />
+            <button 
+              onClick={() => navigate("/signup")}
+              className="hidden sm:flex items-center gap-2 bg-slate-950 dark:bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 transition-all active:scale-95 shadow-md shadow-black/10"
+            >
+              Signup <ArrowRight size={16} />
             </button>
 
             <button
@@ -109,7 +105,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className={`fixed inset-0 z-[48] md:hidden transition-all duration-500 ${isOpen ? "visible opacity-100" : "invisible opacity-0"}`}>
-        <div className="absolute inset-0 bg-black/10 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
         <div className={`absolute right-4 top-24 left-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-8 rounded-3xl shadow-2xl transition-all duration-300 ${isOpen ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"}`}>
           <div className="flex flex-col gap-6">
             <div className="space-y-4">
@@ -124,7 +120,7 @@ const Navbar = () => {
             <div className="h-px bg-gray-100 dark:bg-gray-800" />
 
             <div className="flex flex-col gap-4">
-              <button className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg">
+              <button onClick={() => {navigate("/signup"); setIsOpen(false)}} className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg">
                 Get Started
               </button>
               <div className="flex gap-4">

@@ -19,12 +19,13 @@ const StepCard: FC<Step> = ({ n, emoji, title, desc }) => (
     <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">{emoji}</div>
 
     <h3 className="text-base sm:text-lg font-bold 
-      text-slate-900 dark:text-white mb-2">
+      text-slate-500 dark:text-white mb-2">
       {title}
     </h3>
 
     <p className="text-sm sm:text-base 
-      text-slate-500 dark:text-slate-400 
+      text-slate-500 dark:text-slate-300
+       
       leading-relaxed">
       {desc}
     </p>

@@ -24,7 +24,7 @@ const Footer: FC = () => {
                 <ShipIcon />
               </div>
               <span className="font-bold text-lg text-white">
-                Ship<span className="text-blue-400">Smarter</span>
+                 Ship<span className="text-blue-600">sphere</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed">
