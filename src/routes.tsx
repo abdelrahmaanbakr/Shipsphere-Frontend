@@ -2,12 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import Auth from "./Layouts/Auth";
 import MainLayout from "./Layouts/MainLayout";
 import About from "./pages/About/About";
+import Billing from "./pages/Billing/Billing";
+import Compare from "./pages/Compare/Compare";
 import Contact from "./pages/Contact/Contact";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
+import ForgotPassword from "./pages/Login/ForgotPassword";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import ForgotPassword from "./pages/Login/ForgotPassword";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,6 +47,20 @@ const router = createBrowserRouter([
     path: "/user",
     element: <Auth/>,
     // errorElement: <NotFound/>
+    children: [
+      {
+        index: true,
+        element: <Dashboard/>
+      },
+      {
+        path: "billing",
+        element: <Billing/>,
+      },
+      {
+        path: "compare",
+        element: <Compare/>,
+      },
+    ]
   }
 ])
 

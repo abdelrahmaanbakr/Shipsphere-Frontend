@@ -20,7 +20,7 @@ const plans = [
   },
   {
     name: 'Pro',
-    price: 29,
+    price: 499,
     period: 'month',
     description: 'Best for growing businesses',
     features: [
@@ -37,7 +37,7 @@ const plans = [
   },
   {
     name: 'Enterprise',
-    price: 99,
+    price: 999,
     period: 'month',
     description: 'For large-scale operations',
     features: [
@@ -105,7 +105,7 @@ export default function Subscription() {
               </div>
             )}
 
-            {/* 👇 ده الجزء اللي خليناه flex-1 */}
+           
             <div className="flex-1">
 
               <div className="text-center mb-6">
@@ -117,7 +117,7 @@ export default function Subscription() {
                 </p>
                 <div className="flex items-baseline justify-center gap-1">
                   <span className="text-5xl font-bold dark:text-white">
-                    ${plan.price}
+                    {plan.price} EGP
                   </span>
                   <span className="text-gray-600 dark:text-slate-400">
                     /{plan.period}
