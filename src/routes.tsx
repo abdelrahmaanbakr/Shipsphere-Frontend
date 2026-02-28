@@ -7,6 +7,10 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import ForgotPassword from "./pages/Login/ForgotPassword";
+import Subscription from "./pages/SubscriptionPlans/Subscription";
+import path from "path";
+import Settings from "./pages/Settings/Settings";
+import Profile from "./pages/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -37,8 +41,19 @@ const router = createBrowserRouter([
       {
         path: "forgot",
         element: <ForgotPassword/>,
+      },
+      {
+        path: "subscription",
+        element: <Subscription/>,
+      },
+      {
+        path: "settings",
+        element: <Settings/>,
+      },
+      {
+        path:"profile",
+        element: <Profile/>,
       }
-
     ]
   },
   {
