@@ -10,6 +10,9 @@ import Home from "./pages/Home/Home";
 import ForgotPassword from "./pages/Login/ForgotPassword";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import Profile from "./pages/Profile/Profile";
+import Settings from "./pages/Settings/Settings";
+import Subscription from "./pages/SubscriptionPlans/Subscription";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,6 +63,18 @@ const router = createBrowserRouter([
         path: "compare",
         element: <Compare/>,
       },
+      {
+        path: "profile",
+        element: <Profile/>,
+      },
+      {
+        path: "settings",
+        element: <Settings/>,
+      },
+      {
+        path:"subscription",
+        element: <Subscription/>
+      }
     ]
   }
 ])
