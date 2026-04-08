@@ -6,7 +6,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: FC<InputProps> = ({ label, id, ...rest }) => (
   <div>
-    <label htmlFor={id} className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+    <label
+      htmlFor={id}
+      className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2"
+    >
       {label}
     </label>
     <input
@@ -20,4 +23,5 @@ const Input: FC<InputProps> = ({ label, id, ...rest }) => (
   </div>
 );
 
+export { Input };
 export default Input;

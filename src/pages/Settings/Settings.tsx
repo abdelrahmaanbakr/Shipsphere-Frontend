@@ -7,8 +7,30 @@ import { Select } from "../../components/Select";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import toast from "react-hot-toast";
 
+type NotificationSettings = Record<
+  "shipment" | "payment" | "delivery" | "promo",
+  boolean
+>;
+
+type SettingsState = {
+  notifications: NotificationSettings;
+  language: string;
+  currency: string;
+  timezone: string;
+};
+
+const notificationItems: Array<{
+  key: keyof NotificationSettings;
+  label: string;
+}> = [
+  { key: "shipment", label: "Shipment updates" },
+  { key: "payment", label: "Payment confirmations" },
+  { key: "delivery", label: "Delivery alerts" },
+  { key: "promo", label: "Promotional offers" },
+];
+
 export default function Settings() {
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<SettingsState>({
     notifications: {
       shipment: true,
       payment: true,
@@ -30,7 +52,7 @@ export default function Settings() {
   useEffect(() => {
     const saved = localStorage.getItem("userSettings");
     if (saved) {
-      setSettings(JSON.parse(saved));
+      setSettings(JSON.parse(saved) as SettingsState);
     }
   }, []);
 
@@ -88,12 +110,7 @@ export default function Settings() {
         </div>
 
         <div className="space-y-3">
-          {[
-            { key: "shipment", label: "Shipment updates" },
-            { key: "payment", label: "Payment confirmations" },
-            { key: "delivery", label: "Delivery alerts" },
-            { key: "promo", label: "Promotional offers" },
-          ].map((item) => (
+          {notificationItems.map((item) => (
             <div
               key={item.key}
               className="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-700 rounded-lg"

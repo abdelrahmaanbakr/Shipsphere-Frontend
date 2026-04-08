@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { Package, MapPin, AlertCircle, Clock } from "lucide-react";
 import { Card } from "@/components/Card";

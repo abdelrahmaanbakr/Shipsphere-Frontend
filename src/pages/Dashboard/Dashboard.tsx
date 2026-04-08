@@ -39,12 +39,6 @@ const chartData = [
   { month: "Jun", shipments: 48 },
 ];
  
-const statusConfig = {
-  pending:    { label: "Pending",    variant: "warning" as const },
-  in_transit: { label: "In Transit", variant: "info"    as const },
-  delivered:  { label: "Delivered",  variant: "success" as const },
-};
- 
 const iconBg    = ["bg-blue-100",   "bg-teal-100",   "bg-green-100",   "bg-purple-100"];
 const iconColor = ["text-blue-600", "text-teal-600", "text-green-600", "text-purple-600"];
 const barColor  = [

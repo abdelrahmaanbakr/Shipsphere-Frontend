@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Search, Book, MessageCircle, Phone, Mail, Send } from "lucide-react";
 import { Card } from "../../components/Card";
 import { Button } from "../../components/Button";

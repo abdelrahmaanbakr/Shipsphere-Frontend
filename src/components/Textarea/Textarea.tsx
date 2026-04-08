@@ -1,4 +1,17 @@
-export function Textarea({ label, error, className = '', ...props }: any) {
+import type { TextareaHTMLAttributes } from "react";
+
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  error?: string;
+  className?: string;
+}
+
+export function Textarea({
+  label,
+  error,
+  className = '',
+  ...props
+}: TextareaProps) {
   return (
     <div className="w-full">
       {label && (

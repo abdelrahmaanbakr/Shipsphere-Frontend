@@ -1,4 +1,24 @@
-export function Select({ label, error, options, className = '', ...props }: any) {
+import type { ReactNode, SelectHTMLAttributes } from "react";
+
+interface SelectOption {
+  value: string;
+  label: ReactNode;
+}
+
+interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  label?: string;
+  error?: string;
+  options: SelectOption[];
+  className?: string;
+}
+
+export function Select({
+  label,
+  error,
+  options,
+  className = '',
+  ...props
+}: SelectProps) {
   return (
     <div className="w-full">
       {label && (
@@ -23,7 +43,7 @@ export function Select({ label, error, options, className = '', ...props }: any)
         `}
         {...props}
       >
-        {options.map((opt: any) => (
+        {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>

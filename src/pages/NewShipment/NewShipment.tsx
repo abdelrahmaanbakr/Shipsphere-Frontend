@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { Package, MapPin, User, Upload, ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react';
 import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
@@ -124,7 +124,7 @@ export default function NewShipment() {
     if (currentStep > 0) setCurrentStep((s) => s - 1);
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFormData((prev) => ({ ...prev, aiImage: e.target.files![0] }));
     }

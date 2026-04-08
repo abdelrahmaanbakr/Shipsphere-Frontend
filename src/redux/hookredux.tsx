@@ -1,5 +1,6 @@
 import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
 import type { RootState, AppDispatch } from "./store";
+import { navigate as navigateAction } from "./navigateRedux/navigateSlice";
 // --------------------
 // dispatch مع type مضبوط
 // --------------------
@@ -22,11 +23,11 @@ export const useThemeRedux = () => {
 // Navigation Hook
 // --------------------
 export const useNavigationRedux = () => {
-  const currentPage = useAppSelector((state) => state.navigation.lastClicked);
+  const currentPage = useAppSelector((state) => state.navigation.currentPath);
   const dispatch = useAppDispatch();
 
   const navigateRedux = (page: string) => {
-    dispatch({ type: "navigation/setNavigation", payload: page });
+    dispatch(navigateAction(page));
   };
 
   return { currentPage, navigateRedux };

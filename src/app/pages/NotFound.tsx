@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router';
 import { AlertCircle, Home, ArrowLeft } from 'lucide-react';
 import { Button } from '../components/Button';

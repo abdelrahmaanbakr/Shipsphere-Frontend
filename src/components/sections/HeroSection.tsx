@@ -6,10 +6,8 @@ import Button from "../Buttons/Buttons";
 
 const HeroSection: FC = () => {
   const dispatch = useAppDispatch();
-
-  const handleClick = (page: string) => {
-    dispatch(navigate(page));
-  };
+  void dispatch;
+  void navigate;
 
   return (
     <section className="relative w-full min-h-[85vh] md:min-h-[90vh] overflow-hidden">

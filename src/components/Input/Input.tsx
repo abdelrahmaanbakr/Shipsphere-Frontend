@@ -1,3 +1,12 @@
+import type { InputHTMLAttributes, ReactNode } from "react";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  error?: string;
+  icon?: ReactNode;
+  className?: string;
+}
+
 export function Input({ label, error, icon, className = '', ...props }: InputProps) {
   return (
     <div className="w-full">

@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { CheckCircle2, Package, Download, ArrowRight } from "lucide-react";
 import { Card } from "@/components/Card";
